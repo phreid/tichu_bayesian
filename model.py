@@ -71,11 +71,13 @@ def plot_traces(mcmc,hand_crit):
         
     names = map('-'.join,hand_crit)
     
-    for name in names:
+    for i,name in enumerate(names):
         plt.hist(mcmc.trace('p_' + name)[:],histtype='stepfilled',label=name,alpha=0.75)
-        plt.axvline(mcmc.trace('p_' + name)[:].mean(),color='black',linestyle='--')
+        plt.axvline(mcmc.trace('p_' + name)[:].mean(),
+                    color=plt.rcParams['axes.color_cycle'][i],linestyle='--')
         plt.legend(bbox_to_anchor=(1.2, 1))
         
+    plt.grid(False)
     plt.title('Posterior Distribution(s) and Mean(s) of $P_{cards}$')
     
     plt.savefig('plots\%s.png' % ','.join(names), bbox_inches='tight')
